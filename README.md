@@ -40,10 +40,10 @@ It is hardcoded for now:
 
 ## TODO LIST in admin area
 
-1. Hide delete button from record options
-2. Add event on delete news 
-3. Not allow action create, removing from menu is not enough
-4. Batch support
+1. Hide delete button from record options (deleting is not possible, but button is displayed)
+2. Add event on delete news (delete related record or add check for orphans)
+3. Not allow action create, removing from menu is not enough (core stuff)
+4. Batch support (what is beforeUpdate alternative for batch) 
 
 
 ## TODO LIST in frontend area
@@ -52,8 +52,11 @@ It is hardcoded for now:
 2. solve canonical URLs, Routes
 3. add e_metatag support
 4. remove hardcoded markup 
-5. add preferencies 
-6. add plugin own categories list 
+5. add preferences 
+6. add plugin own categories list - plugin frontpage 
 7. fix frontend plugin page
+8. related news ? 
+
+
 
 
