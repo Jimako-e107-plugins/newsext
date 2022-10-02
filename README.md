@@ -7,7 +7,7 @@ Admin part only
 ## It allows multiple categories for core news 
 
 
-###Version 1.0:
+### Version 1.0:
 
 - admin fully working
 - newscategory.php is just customized copy of news.php 
@@ -35,7 +35,7 @@ It is hardcoded for now:
 - ".html " - Google just likes html pages and it solves issue with last slash 
 
 
-###Important:  there is a lot of work to do.  This plugin is not recommended to use on live site. 
+### Important:  there is a lot of work to do.  This plugin is not recommended to use on live site. 
 
 
 ## TODO LIST in admin area
