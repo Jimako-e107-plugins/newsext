@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e107Plugin name="News Extended" lan="LAN_NE_01" version="1.0" date="2022-10-01" compatibility="2.3" installRequired="true" >
+	<author name="Jimako" url="https://www.e107sk.com/" />
+	<summary lan="">Some missing features for news plugin</summary>
+	<description lan="">Way how to extend news plugin without changing core files</description>
+	<keywords>
+		<word>admin</word>
+		<word>news</word>
+		<word>menu</word>
+	</keywords>
+	<category>content</category>
+	<copyright>https://www.e107sk.com/</copyright>
+	<adminLinks>
+		<link url="admin/admin_config.php" description="" icon="images/icon32.png" iconSmall="images/icon64.png" icon128="images/icon128.png" primary="true" >LAN_CONFIGURE</link>
+	</adminLinks>
+</e107Plugin>

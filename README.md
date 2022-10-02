@@ -1,2 +1,6 @@
-# newsext
-e107 plugin for extending news functionality
+# Extended core news plugin
+
+## Multi categories news support
+
+Admin part only 
+
