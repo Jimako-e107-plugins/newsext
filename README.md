@@ -7,6 +7,19 @@ Admin part only
 ## It allows multiple categories for core news 
 
 
+### Version 1.1:
+
+*News Categories Management*
+- added news categories administration, copied from newspost.php
+
+_Changes in edit mode:_ 
+    - removed second tab, all fields are now on one page
+
+
+_Changes in list mode:_ 
+- added Quick View of category
+
+
 ### Version 1.0:
 
 - admin fully working
@@ -44,7 +57,7 @@ It is hardcoded for now:
 2. Add event on delete news (delete related record or add check for orphans)
 3. Not allow action create, removing from menu is not enough (core stuff)
 4. Batch support (what is beforeUpdate alternative for batch) 
-
+5. Add event on create news (create related record)
 
 ## TODO LIST in frontend area
 

@@ -14,7 +14,7 @@ if (!getperms('P'))
 }
 
 // e107::lan('news_extended',true);
-e107::coreLan('newspost', true);
+
 
 /* TODO LIST 
 1. Hide delete button from record options
@@ -28,11 +28,12 @@ e107::coreLan('newspost', true);
 $query = "SELECT n.news_id, n.news_title, n.news_category, 
           ne.news_id AS id, ne.news_categories FROM `#news` AS n 
 	 	  LEFT JOIN `#news_extended` AS ne ON n.news_id = ne.news_id
-		  WHERE ne.news_id IS NULL"; 
+		  WHERE ne.news_id IS NULL";
 
-$missing_records = e107::getDb()->retrieve($query , true);
- 
-foreach($missing_records AS $row) {
+$missing_records = e107::getDb()->retrieve($query, true);
+
+foreach ($missing_records as $row)
+{
 	$insert_ne = [
 		'data' => [
 			'news_id' => $row['news_id'],
@@ -46,47 +47,13 @@ foreach($missing_records AS $row) {
 }
 
 
-class news_extended_adminArea extends e_admin_dispatcher
-{
-
-	protected $modes = array(
-
-		'main'	=> array(
-			'controller' 	=> 'news_extended_ui',
-			'path' 			=> null,
-			'ui' 			=> 'news_extended_form_ui',
-			'uipath' 		=> null
-		),
-
-	);
-
-
-	protected $adminMenu = array(
-
-		'main/list'			=> array('caption' => LAN_MANAGE, 'perm' => 'P'),
-		//	'main/create'		=> array('caption' => LAN_CREATE, 'perm' => 'P'),
-
-		// 'main/div0'      => array('divider'=> true),
-		// 'main/custom'		=> array('caption'=> 'Custom Page', 'perm' => 'P'),
-
-	);
-
-	protected $adminMenuAliases = array(
-		'main/edit'	=> 'main/list'
-	);
-
-	protected $menuTitle = 'News Extended';
-}
-
-
-
-
+require('admin_leftmenu.php');
 
 class news_extended_ui extends e_admin_ui
 {
 
 	protected $pluginTitle		= 'News Extended';
-	protected $pluginName		= 'news_extended';
+	protected $pluginName		= 'newsext';
 	protected $fieldPrefName	= 'news_extended';
 	protected $table 		= "news";
 	protected $pid			= "news_id";
@@ -105,38 +72,48 @@ class news_extended_ui extends e_admin_ui
 	protected $editQry = "SELECT n.news_id, n.news_category,ne.news_categories FROM `#news` AS n LEFT JOIN `#news_extended` AS ne ON n.news_id = ne.news_id WHERE n.news_id = {ID}";
 
 
+	protected $url          = array(
+		'route'        => 'news/view/item',
+		'name'         => 'news_title',
+		'description'  => 'news_summary',
+		'vars' => array('news_id' => true, 'news_sef' => true, 'category_id' => 'news_category', 'category_sef' => true)
+	); // 'link' only needed if profile not provided.
+
 	protected $listOrder	= "news_id desc";
 	protected $fields = array(
 		'checkboxes'	   		=> array('title' => '', 			'type' => null, 		'width' => '3%', 	'thclass' => 'center first', 	'class' => 'center', 	'nosort' => true, 'toggle' => 'news_selected', 'forced' => TRUE),
-		'news_id'				=> array('title' => LAN_ID, 	    'type' => 'text', 	    'width' => '5%', 	'thclass' => 'center', 			'class' => 'center',  	'nosort' => false, 'readParms' => 'link=sef&target=blank'),
+		'news_id'				=> array(
+			'title' => LAN_ID, 	    'type' => 'text', 	    'width' => '5%', 	'thclass' => 'center', 			'class' => 'center',
+			'nosort' => false, 'readParms' => 'link=sef&target=blank'
+		),
 		'news_title'			=> array(
 			'title' => LAN_TITLE, 		'type' => 'text',   'noedit' => true,  'readonly' => TRUE,
 			'data' => 'safestr',  'filter' => true,  'tab' => 0, 'writeParms' => array('required' => 1, 'size' => 'block-level'), 'inline' => true,		'width' => 'auto', 'thclass' => '', 				'class' => null, 		'nosort' => false
 		),
 
-		'news_category'			=> array('title' => 'Primary '. NWSLAN_6, 		'type' => 'dropdown',   'data' => 'int', 'tab' => 0, 'inline' => true,	'width' => 'auto', 	'thclass' => '', 				'class' => null, 		'nosort' => false, 'batch' => true, 'filter' => true),
+		'news_category'			=> array('title' => 'Primary ' . NWSLAN_6, 		'type' => 'dropdown',   'data' => 'int', 'tab' => 0, 'inline' => true,	'width' => 'auto', 	'thclass' => '', 				'class' => null, 		'nosort' => false, 'batch' => true, 'filter' => true),
 
 		'news_categories'         =>
 
 		array(
-			'title' => 'Multi Categories',  
+			'title' => 'Multi Categories',
 			'type' => 'dropdown',
-			'data' => false,  
-			'width' => 'auto',  
-		//	'batch' => 'value', 
-			'inline' => true,   
-			'filter' => 1,  
+			'data' => false,
+			'width' => 'auto',
+			//	'batch' => 'value', 
+			'inline' => true,
+			'filter' => 1,
 			'help' => '',
 			'readParms' => array('type' => 'checkboxes'),  'writeParms' =>  array(),
 			'class' => 'left',  'thclass' => 'left',
 		),
 
 		'options'				=> array(
-			'title' => LAN_OPTIONS, 	
-			'type' => null, 		
-			'width' => '10%', 	
+			'title' => LAN_OPTIONS,
+			'type' => null,
+			'width' => '10%',
 			'thclass' => 'center last',
-			'class' => 'center', 	
+			'class' => 'center',
 			'nosort' => true,
 			'forced' => TRUE
 		)
@@ -167,14 +144,14 @@ class news_extended_ui extends e_admin_ui
 		$this->fields['news_categories']['writeParms']['multiple'] = 1;
 	}
 
- 
+
 	//nasty way how to not deleting anything 
 	public function ListDeleteTrigger($posted)
 	{
 		//create is not allowed
 		return NULL;
 	}
- 
+
 	// ------- Customize Create --------
 
 	public function beforeCreate($new_data, $old_data)
@@ -198,7 +175,7 @@ class news_extended_ui extends e_admin_ui
 
 	public function beforeUpdate($new_data, $old_data, $id)
 	{
- 
+
 		if (!empty($new_data['news_categories']))
 		{
 
@@ -234,7 +211,7 @@ class news_extended_ui extends e_admin_ui
 		// do something		
 	}
 
-	 
+
 	public function renderHelp()
 	{
 		$caption = LAN_HELP;
