@@ -70,7 +70,12 @@ class newsext_category_item extends e_front_model
 	public function sc_news_category_url($parm = '')
 	{
 
-		$url = e107::url('newsext/category', array('id' => $this->getId(), 'name' => $this->cat('sef')));
+		$url = e107::url('newsext/category', array(
+				'id' => $this->getId(), 
+				'category_id' => $this->getId(), 
+				'name' => $this->cat('sef'), 
+				'category_sef' => $this->cat('sef')));
+				
 		switch ($parm)
 		{
 			case 'link':

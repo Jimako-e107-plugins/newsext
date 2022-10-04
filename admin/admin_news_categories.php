@@ -36,7 +36,7 @@ class newsext_cat_ui extends e_admin_ui
 		'category_id'				=> array(
 			'title' => LAN_ID,
 			'type' => 'text',
-			'readParms' => 'url=category-adminui&target=blank ',	'width' => '5%', 'forced' => TRUE, 'readonly' => TRUE
+			'readParms' => 'url=category&target=blank ',	'width' => '5%', 'forced' => TRUE, 'readonly' => TRUE
 		),
 
 		'category_icon' 			=> array(

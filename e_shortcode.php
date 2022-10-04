@@ -19,7 +19,11 @@ class newsext_shortcodes extends e_shortcode
 
 				$news_item = $category;
 				$category_name = !empty($news_item['category_name']) ? e107::getParser()->toHTML($news_item['category_name'], FALSE, 'defs') : '';
-				$category = !empty($news_item['category_id']) ? array('id' => $news_item['category_id'], 'name' => $news_item['category_sef']) : array();
+				$category = !empty($news_item['category_id']) ? array(
+					'id' => $news_item['category_id'],
+					'category_id' => $news_item['category_id'],
+					'name' => $news_item['category_sef'],
+					'category_sef' => $news_item['category_sef']) : array();
 				//	$categoryClass = varset($GLOBALS['NEWS_CSSMODE'],'');
 				//$style = isset($this->param['catlink']) ? "style='".$this->param['catlink']."'" : '';
 
