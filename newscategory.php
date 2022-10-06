@@ -47,6 +47,7 @@ class news_front
 
 	private $pagination;
 	//	private $interval = 1;
+	private $page;
 
 	function __construct()
 	{
@@ -102,13 +103,18 @@ class news_front
 
 		$action = $_GET['action'];
 		$sub_action = 	$_GET['id'];
+		$page = varset($_GET['page'], 1);
+
 		$this->action = e107::getParser()->filter($action);
 		$this->subAction = e107::getParser()->filter($sub_action, "int");
+		$this->page = e107::getParser()->filter($page, "int");
 
 		if ($this->subAction > 0)
 		{
 			$this->categoryRow = e107::getDb()->retrieve("news_category", '*', " category_id = " . $this->subAction);
+			$this->categoryRow['category_page'] = $this->page;
 		}
+ 
 	}
 
 
@@ -289,24 +295,24 @@ class news_front
 	private function setPagination()
 	{
 
-		$this->from = (int) ($_GET['page']);
-		 
+		$this->from = $this->page; 
+		
 		// New in v2.3.1 Pagination with "Page" instead of "Record".
-		if (!empty($this->pref['news_pagination']) && $this->pref['news_pagination'] === 'page' && !empty($_GET['page']))
+		if (!empty($this->pref['news_pagination']) && $this->pref['news_pagination'] === 'page' && !empty($this->page))
 		{
 			switch ($this->action)
 			{
 				case 'list':
 				case 'index':
-					$this->from = (int) ($_GET['page'] - 1)  * NEWSLIST_LIMIT;
+					$this->from = (int) ($this->page - 1)  * NEWSLIST_LIMIT;
 					break;
 
 				default:
-					$this->from = (int) ($_GET['page'] - 1)  * ITEMVIEW;
+					$this->from = (int) ($this->page- 1)  * ITEMVIEW;
 			}
 		}
 		else {
-			$this->from = (int) ($_GET['page']);
+			$this->from = (int) ($this->page);
 		}
  
 		$this->addDebug('NEWSLIST_LIMIT', NEWSLIST_LIMIT);
@@ -374,12 +380,24 @@ class news_front
 				e107::title($title);
 				e107::meta('robots', 'index, follow');
 				e107::route('newsext/category');
-				e107::canonical($this->route, $this->categoryRow);
+				if ($this->page > 1)
+				{
+					e107::canonical('newsext', 'category-canonical', $this->categoryRow); 
+				}
+				else {
+					e107::canonical('newsext', 'category', $this->categoryRow); 
+				}
+				
 
 				break;
 
 			case "index";
-
+				if($this->page > 1) {
+					e107::canonical('newsext', 'index-canonical', array('index_page' => $this->page)); 
+				}
+				else {
+					e107::canonical('newsext', 'index'); 
+				}
 				break;
 		}
 	}

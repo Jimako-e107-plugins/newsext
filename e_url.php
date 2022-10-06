@@ -22,7 +22,10 @@ class newsext_url
 		$config = array();
 
 		$alias = 'news-categories';
- 
+
+
+
+
 		$config['category'] = array(
 			'alias'         => $alias,
 			'regex'			=> '^{alias}\/([\d]*)(?:\/|-)([\w-]*)/?\??(.*).html(.*)',
@@ -30,11 +33,22 @@ class newsext_url
 			'redirect'		=> '{e_PLUGIN}newsext/newscategory.php?action=list&id=$1',
 		);
 
+		$config['category-canonical'] = array(
+			'alias'         => $alias,
+			'sef'			=> '{alias}/{category_id}/{category_sef}.html?page={category_page}',
+		);
+
 		$config['index'] = array(
 			'alias'         => $alias,
 			'regex'			=> '^{alias}([\w-]*)\/(.*)',
 			'sef'			=> '{alias}/',
 			'redirect'		=> '{e_PLUGIN}newsext/newscategory.php?action=index&id=0&',
+		);
+
+
+		$config['index-canonical'] = array(
+			'alias'         => $alias,
+			'sef'			=> '{alias}/?page={index_page}'
 		);
 
 		return $config;
